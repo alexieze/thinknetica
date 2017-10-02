@@ -17,8 +17,8 @@ if user_height <= 0
   errors[:zeroHeight] = 'Рост не может быть пустым или быть равным нулю'
 end
 
-if errors.length > 0
-  errors.each do |error_key,error_value|
+if !errors.empty?
+  errors.each_value do |error_value|
     puts error_value
   end
 else
