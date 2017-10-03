@@ -35,8 +35,8 @@ else
   d = b**2 - 4 * a * c
   if d >= 0
     if d > 0
-      x1 = (-b + Math.sqrt(d)) / 2 * a
-      x2 = (-b - Math.sqrt(d)) / 2 * a
+      x1 = (-b + Math.sqrt(d)) / (2 * a)
+      x2 = (-b - Math.sqrt(d)) / (2 * a)
       puts "Дискриминант равен #{d}. Корень 1 равен - #{x1}. Корень 2 равен - #{x2}"
     else
       x1 = (-b / 2 * a)
