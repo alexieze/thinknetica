@@ -20,8 +20,14 @@ months = { 1 => 31,
 }
 
 leap_year = ((year%4 == 0 and year%100 != 0) or (year%400 == 0)) ? true : false
-
 months[2] += 1 if leap_year
 
+day_serial_number = day
+months.each do |key, value|
+  if key < month
+    day_serial_number += value
+  end
+end
+puts day_serial_number
 
 
