@@ -9,7 +9,7 @@ loop do
     products.each do |productName, productPrice|
       price += productPrice.to_f
     end
-    puts price
+    puts "Итоговая стоимость корзины покупок равна #{price} р."
     break;
   else
     puts 'Введите цену за продукт'
