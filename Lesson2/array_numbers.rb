@@ -1,5 +1,5 @@
 array_numbers = (10..100).map do |i|
-  i if (i % 5).zero? && (i % 5) != nil
+  i if (i % 5).zero?
 end.compact
 
 # 2 й способ

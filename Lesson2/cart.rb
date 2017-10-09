@@ -13,7 +13,7 @@ loop do
     break;
   else
     puts 'Введите количество продукта'
-    product_count = gets.chomp.to_i
+    product_count = gets.chomp.to_f
 
     puts 'Введите цену за продукт'
     product_price = gets.chomp.to_f
