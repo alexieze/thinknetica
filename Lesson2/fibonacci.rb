@@ -1,5 +1,5 @@
 fibonacci_array = [1, 1]
-while true do
+loop do
   number = (fibonacci_array[-1] + fibonacci_array[-2])
   break if number >= 100
   fibonacci_array << number
