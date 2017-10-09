@@ -2,18 +2,22 @@ products = {}
 
 loop do
   puts 'Введите название продукта'
-  productName = gets.chop.to_s.downcase
+  product_name = gets.chop.to_s.downcase
 
-  if productName.include? 'стоп'
+  if nil != product_name =~ /^(стоп)$/
     price = 0
-    products.each do |productName, productPrice|
-      price += productPrice.to_f
+    products.each do |product_name, product_price|
+      price += product_price.to_f
     end
     puts "Итоговая стоимость корзины покупок равна #{price} р."
     break;
   else
+    puts 'Введите количество продукта'
+    product_count = gets.chomp.to_i
+
     puts 'Введите цену за продукт'
-    productPrice = gets.chomp.to_f
-    products["'" + productName + "'"] = productPrice
+    product_price = gets.chomp.to_f
+
+    products[product_name] = product_price * product_count
   end
 end

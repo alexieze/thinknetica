@@ -1,7 +1,5 @@
-array_numbers = (10..100).to_a.map do |i|
-  if (i % 5).zero?
-    i
-  end
+array_numbers = (10..100).map do |i|
+  i if (i % 5).zero?
 end
-puts array_numbers.compact.inspect
+puts array_numbers.inspect
 
