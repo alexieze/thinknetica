@@ -4,7 +4,7 @@ loop do
   puts 'Введите название продукта'
   product_name = gets.chop.to_s.downcase
 
-  if nil != product_name =~ /^(стоп)$/
+  if product_name.eql? 'стоп'
     price = 0
     products.each do |product_name, product_price|
       price += product_price.to_f
