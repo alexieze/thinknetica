@@ -4,14 +4,8 @@ class Route
     @stations = [first_station, end_station]
   end
 
-  def get_full_route
-    @stations.each do |station|
-      puts station.name
-    end
-  end
-
   def add_station(station)
-    @stations.insert(@stations.length - 1, station)
+    @stations.insert(- 1, station)
   end
 
   def del_station(station)

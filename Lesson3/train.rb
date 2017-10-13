@@ -61,7 +61,7 @@ class Train
   end
 
   def go_next
-    if @speed > 0 && @current_station_index < @route.stations.index(@route.stations.last)
+    if @speed > 0 && @current_station_index < (@route.stations.length - 1)
       @route.stations[@current_station_index].del_train(self)
       @current_station_index += 1
       @route.stations[@current_station_index].add_train(self)
