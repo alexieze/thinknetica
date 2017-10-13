@@ -26,7 +26,7 @@ class Station
         freight_trains += 1
       end
     end
-    "Пасажикских поездов на станции #{self.station_name} #{passenger_trains}, грузовых поездов #{freight_trains}"
+    "Пасажикских поездов на станции #{self.name} #{passenger_trains}, грузовых поездов #{freight_trains}"
   end
 
   def go_next(train, route)
@@ -34,5 +34,9 @@ class Station
       train.route(route)
       train.go_next
     end
+  end
+
+  def checkTrain? train
+    @trains.include? train
   end
 end

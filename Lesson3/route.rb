@@ -1,11 +1,11 @@
 class Route
-
+  attr_reader :route
   def initialize(first_station, end_station)
     @first_station, @end_station = first_station , end_station
     @route = [@first_station, @end_station]
   end
 
-  def get_route
+  def get_full_route
     @route.each do |station|
       puts station.name
     end
