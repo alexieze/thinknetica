@@ -9,34 +9,22 @@ class Station
 
   def add_train(train)
     @trains << train
+    puts "Поезд #{train.name} прибыл на станцию #{self.name}"
   end
 
   def del_train(train)
-    @trains.delete train
+    @trains.delete(train)
+    puts "Поезд #{train.name} отправился в путь со станции #{self.name}"
   end
 
 
-  def get_types_of_trains
-    passenger_trains = 0
-    freight_trains = 0
+  def get_types_of_trains(type)
+    cnt_trains = 0
     @trains.each do |train|
-      if train.type == 'пасажирский'
-        passenger_trains += 1
-      elsif train.type == 'грузовой'
-        freight_trains += 1
+      if train.type == type
+        cnt_trains += 1
       end
     end
-    "Пасажикских поездов на станции #{self.name} #{passenger_trains}, грузовых поездов #{freight_trains}"
-  end
-
-  def go_next(train, route)
-    if self.trains.index train != nil
-      train.route(route)
-      train.go_next
-    end
-  end
-
-  def checkTrain? train
-    @trains.include? train
+    cnt_trains
   end
 end
