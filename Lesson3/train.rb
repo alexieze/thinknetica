@@ -62,21 +62,21 @@ class Train
 
   def go_next
     if @speed > 0 && @current_station_index < @route.stations.length - 1
-      @route.stations[@current_station_index].del_train(self)
+      current_station.del_train(self)
       @current_station_index += 1
-      @route.stations[@current_station_index].add_train(self)
+      current_station.add_train(self)
     else
-      puts "Конечная станция #{self.current_station.name} дальше двигаться нельзя"
+      puts "Конечная станция #{current_station.name} дальше двигаться нельзя"
     end
   end
 
   def go_prev
     if @speed > 0 && @current_station_index > 0
-      @route.stations[@current_station_index].del_train(self)
+      current_station.del_train(self)
       @current_station_index -= 1
-      @route.stations[@current_station_index].add_train(self)
+      current_station.add_train(self)
     else
-      puts "Конечная станция #{self.current_station.name} дальше двигаться нельзя"
+      puts "Конечная станция #{current_station.name} дальше двигаться нельзя"
     end
   end
 end
