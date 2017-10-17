@@ -47,6 +47,19 @@ class Train
     end
   end
 
+  def add_carriage(carriage)
+    if stopped? && check_add_carriage?(carriage)
+      @carriages << carriage
+      puts "Прицеплен вагон #{carriage.name}"
+    else
+      puts 'Нельзя прицеплять не пасажирский вагон, либо поезд должен быть остановлен'
+    end
+  end
+
+  def del_carriage(carriage)
+    @carriages.delete(carriage)
+    puts "Отцеплен вагон #{carriage.name}"
+  end
 
   protected
   # Данный метод поставил в protected потому что не вижу надобности делать его открытым
