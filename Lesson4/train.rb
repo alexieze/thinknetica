@@ -69,7 +69,7 @@ class Train
   end
 
   private
-
+  # Данные методы были перещены потому что, в интерфейсе дочерних классов они не нужны, управление поездами произходит и без них
   def current_station
     @route.stations[@current_station_index]
   end
