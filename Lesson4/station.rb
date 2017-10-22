@@ -5,6 +5,23 @@ class Station
   def initialize(name)
     @name = name
     @trains = []
+    @stations = []
+  end
+
+  def set_free_station(station)
+    @stations << station
+  end
+
+  def show_names_free_stations
+    @stations.each do |station|
+      puts station.name
+    end
+  end
+
+  def get_station_from_free(station_name)
+    @stations.delete_if do |station|
+      station.name == station_name
+    end
   end
 
   def add_train(train)
