@@ -1,12 +1,11 @@
 
 class RailStationCompany
   attr_reader :name, :stations, :trains, :routes
-  def initialize(name, manage_messages)
+  def initialize(name)
     @name = name
     @stations = []
     @trains   = []
     @routes   = []
-    @message = manage_messages
   end
 
 
