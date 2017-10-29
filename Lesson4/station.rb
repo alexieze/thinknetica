@@ -5,6 +5,7 @@ class Station
     @name = name
     @trains = []
   end
+
   def add_train(train)
     @trains << train
     puts "Поезд #{train.name} прибыл на станцию #{self.name}"

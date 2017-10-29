@@ -1,5 +1,5 @@
 class Train
-  attr_reader :number, :name, :speed
+  attr_reader :number, :name, :speed, :carriages
   def initialize(number, name, speed = 0)
     @number = number
     @name = name
@@ -21,6 +21,7 @@ class Train
     if route.instance_of? Route
       @route = route
       @current_station_index = 0
+      p @route.stations
       @route.stations[@current_station_index].add_train(self)
     else
       puts 'Вы передали не известный экземплар класса пути'
@@ -48,12 +49,8 @@ class Train
   end
 
   def add_carriage(carriage)
-    if stopped? && check_add_carriage?(carriage)
       @carriages << carriage
       puts "Прицеплен вагон #{carriage.name}"
-    else
-      puts 'Нельзя прицеплять не пасажирский вагон, либо поезд должен быть остановлен'
-    end
   end
 
   def del_carriage(carriage)
@@ -61,9 +58,6 @@ class Train
     puts "Отцеплен вагон #{carriage.name}"
   end
 
-  protected
-  # Данный метод поставил в protected потому что не вижу надобности делать его открытым
-  # а вот в классах посредниках он будет полезен
   def stopped?
     @speed == 0? true : false
   end

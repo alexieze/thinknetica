@@ -16,38 +16,146 @@ class RailStationCompany
 
   private
 
+  def show_commands
+    puts '
+         Команды управления станциями"
+         [add_station] - Добавить станцию
+         [list_stations] - Показать список станций
+         [list_trains_on_station] - Список поездов на станции
+
+         Команды управления поездами:
+         [list_trains] - Список поездов
+         [add_train] - Добавить позед
+         [add_route_to_train] - Добавить позед
+         [go_next_station] - Переместиться на следующую станцию
+         [go_prev_station] - Вернуться на предыдущую станцию
+
+         Команды управления вагонами
+         [add_carriage_to_train] - Прицепить вагон к поезду
+         [del_carriage_from_train] - Отцепить вагон от позеда
+         [list_carriages] - Список вагонов у поезда
+
+         Управление маршрутами
+         [add_route] - Добавить маршрут
+         [list_routes] - Список маршрутов
+         [add_station_to_route] - Добавить станцию к маршруту
+         [del_station_from_route] - Удалить станцию у маршрута
+          '
+  end
+
   def run_process
     loop do
       puts 'Введите команду:'
       task = gets.chomp.to_s.downcase
+      ################## stations #####################
       if task == 'add_station'
         add_station
       elsif task == 'list_stations'
-        puts 'Список станций:'
         list_stations
+      elsif task == 'list_trains_on_station'
+        list_trains_on_station
+      ################## trains ########################
       elsif task == 'add_train'
         add_train
+      elsif task == 'add_route_to_train'
+        add_route_to_train
+      elsif task == 'go_next_station'
+        go_next_station
+      elsif task == 'go_prev_station'
+        go_prev_station
       elsif task == 'list_trains'
         list_trains
+      ##################### routes ##########################
       elsif task == 'add_route'
         add_route
-      elsif task == 'list_route'
+      elsif task == 'list_routes'
+        list_routes
+      elsif task == 'add_station_to_route'
+        add_station_to_route
+      elsif task == 'del_station_from_route'
+        del_station_from_route
+      ################## carriages ###############################
+      elsif task == 'add_carriage_to_train'
+        add_carriage_to_train
+      elsif task == 'del_carriage_from_train'
+        del_carriage_from_train
+      elsif task == 'list_carriages'
+        list_carriages
       elsif task == 'exit'
         break
       end
-      p @routes
       next
     end
+  end
+
+  def list_trains_on_station
+    list_stations
+    puts 'Введите имя станции:'
+    station_name = gets.chomp.to_s
+    station = get_station_by_name(station_name)
+    station.trains.each do |train|
+      puts train.name
+    end
+  end
+
+
+
+  def go_next_station
+    puts 'Введите имя поезда'
+    train_name = gets.chomp.to_s
+    train = get_train_by_name(train_name)
+    train.speed = 10;
+    train.go_next()
+  end
+
+  def go_prev_station
+    puts 'Введите имя поезда'
+    train_name = gets.chomp.to_s
+    train = get_train_by_name(train_name)
+    train.speed = 10
+    train.go_prev()
+  end
+
+  def add_carriage_to_train
+    puts 'Введите имя поезда'
+    train_name = gets.chomp.to_s
+    train = get_train_by_name(train_name)
+    train.stop
+    puts 'Введите имя вагона'
+    carriage_name = gets.chomp.to_s
+    if train.stopped? && train.kind_of?(CargoTrain)
+      cargo_carriage = CargoCarriage.new(carriage_name)
+      train.add_carriage(cargo_carriage)
+    elsif train.stopped? && train.kind_of?(PassengerTrain)
+      passenger_carriage = PassengerCarriage.new(carriage_name)
+      train.add_carriage(passenger_carriage)
+    else
+      puts 'Остановите поезд командой train_stop прежде чем прицеплять вагон'
+    end
+  end
+
+  def del_carriage_from_train
+    puts 'Введите имя поезда'
+    train_name = gets.chomp.to_s
+    train = get_train_by_name(train_name)
+    train.stop
+    puts 'Введите имя вагона'
+    carriage_name = gets.chomp.to_s
+    carriage = get_carriage_by_name(train, carriage_name)
+    train.del_carriage(carriage)
+  end
+
+  def list_carriages
+    puts 'Введите имя поезда'
+    train_name = gets.chomp.to_s
+    train = get_train_by_name(train_name)
+    p train.carriages
   end
 
   def add_station
     puts 'Введите название станции:'
     station_name = gets.chomp.to_s
-    if !check_station?(station_name)
-      station = Station.new(station_name)
-    else
-      puts "Станция с именем #{station_name} уже существует"
-    end
+    station = Station.new(station_name)
     @stations << station
   end
 
@@ -56,20 +164,26 @@ class RailStationCompany
     puts '1 - Пасажирский'
     puts '2 - Грузовой'
     train_type = gets.chomp.to_i
+    puts 'Введите номер поезда'
+    train_number = gets.chomp.to_i
+    puts 'Введите имя поезда'
+    train_name = gets.chomp.to_s
     if train_type == 1
-      puts 'Введите номер поезда'
-      train_number = gets.chomp.to_i
-      puts 'Введите имя поезда'
-      train_name = gets.chomp.to_s
       train = PassengerTrain.new(train_number, train_name)
     elsif train_type == 2
-      puts 'Введите номер поезда'
-      train_number = gets.chomp.to_i
-      puts 'Введите имя поезда'
-      train_name = gets.chomp.to_s
-      train = PassengerTrain.new(train_number, train_name)
+      train = CargoTrain.new(train_number, train_name)
     end
     @trains << train
+  end
+
+  def add_route_to_train
+    puts 'Введите имя поезда'
+    train_name = gets.chomp.to_s
+    train = get_train_by_name(train_name)
+    puts 'Введите название маршрута'
+    route_name = gets.chomp.to_s
+    route = get_route_by_name(route_name)
+    train.route(route)
   end
 
   def add_route
@@ -82,45 +196,42 @@ class RailStationCompany
     if station_end && station_start
       puts 'Введите имя маршрута'
       route_name = gets.chomp.to_s
-      if !check_route?(route_name)
-        route = Route.new(route_name, station_start, station_end)
-        @routes << route
-      else
-        puts 'Данный машрут уже существует'
-      end
+      station_start = get_station_by_name(station_start)
+      station_end = get_station_by_name(station_end)
+      route = Route.new(route_name, station_start, station_end)
+      @routes << route
     else
       puts 'Проверьте названия станций оно не может быть пустым'
     end
   end
 
   def add_station_to_route
+    list_stations
     puts 'Введите название станции'
     station_name = gets.chomp.to_s
+    list_routes
     puts 'Введите название марштура'
     route_name = gets.chomp.to_s
-    if check_station?(station_name) && check_route?(route_name)
-      station = get_station_by_name(station_name)
-      route = get_route_by_name(route_name)
-      route.add_station(station)
+    station = get_station_by_name(station_name)
+    route = get_route_by_name(route_name)
+    route.add_station(station)
+  end
+
+  def del_station_from_route
+    list_stations
+    puts 'Введите название станции'
+    station_name = gets.chomp.to_s
+    list_routes
+    puts 'Введите название марштура'
+    route_name = gets.chomp.to_s
+    station = get_station_by_name(station_name)
+    route = get_route_by_name(route_name)
+    if(station.trains.length == 0)
+      route.del_station(station)
     else
-      puts 'Проверьте правильность заполнения марштура или станции'
+      puts 'Нельзя удалить станцию, на ней есть поезда'
     end
-  end
 
-  #def route_station_exits?()
-
-  def check_station?(name)
-    @stations.each do |station|
-      return true if station.name.downcase == name.downcase
-    end
-    return false
-  end
-
-  def check_route?(name)
-    @routes.each do |route|
-      return true if route.name.downcase == name.downcase
-    end
-    return false
   end
 
   def list_stations
@@ -135,36 +246,33 @@ class RailStationCompany
     end
   end
 
+  def list_routes
+    @routes.each do |route|
+      puts route.name
+    end
+  end
+
+  def get_carriage_by_name(train, carriage_name)
+    train.carriages.select do |carriage|
+      return carriage if carriage.name.downcase == carriage_name.downcase
+    end
+  end
+
   def get_train_by_name(name)
     @trains.select do |train|
-      train if train.name.downcase == name.downcase
+      return train if train.name.downcase == name.downcase
     end
   end
 
   def get_station_by_name(name)
     @stations.select do |station|
-      station if station.name.downcase == name.downcase
+      return station if station.name.downcase == name.downcase
     end
   end
 
   def get_route_by_name(name)
     @routes.select do |route|
-      route.name.downcase == name.downcase ? route : false
+      return route if route.name.downcase == name.downcase
     end
-  end
-
-  def show_commands
-    puts 'Команды управления станциями"
-         [list_stations] - Показать список станций
-         [add_station] - Добавить станцию
-         Команды управления поездами:
-         [list_trains] - Список поездов
-         [add_train] - Добавить позед
-         Команды управления вагонами
-         [add_carriage] - Добавить вагон
-         [del_carriage] - Удалить вагон
-         Управление маршрутами
-         [add_route] - Добавить маршрут
-          '
   end
 end
