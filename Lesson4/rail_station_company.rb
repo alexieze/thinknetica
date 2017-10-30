@@ -45,44 +45,47 @@ class RailStationCompany
 
   def run_process
     loop do
+
       puts 'Введите команду:'
       task = gets.chomp.to_s.downcase
+
       ################## stations #####################
-      if task == 'add_station'
-        add_station
-      elsif task == 'list_stations'
-        list_stations
-      elsif task == 'list_trains_on_station'
-        list_trains_on_station
+      case task
+        when 'add_station'
+          add_station
+        when 'list_stations'
+          list_stations
+        when 'list_trains_on_station'
+          list_trains_on_station
       ################## trains ########################
-      elsif task == 'add_train'
-        add_train
-      elsif task == 'add_route_to_train'
-        add_route_to_train
-      elsif task == 'go_next_station'
-        go_next_station
-      elsif task == 'go_prev_station'
-        go_prev_station
-      elsif task == 'list_trains'
-        list_trains
+        when 'add_train'
+          add_train
+        when 'add_route_to_train'
+          add_route_to_train
+        when 'go_next_station'
+          go_next_station
+        when 'go_prev_station'
+          go_prev_station
+        when 'list_trains'
+          list_trains
       ##################### routes ##########################
-      elsif task == 'add_route'
-        add_route
-      elsif task == 'list_routes'
-        list_routes
-      elsif task == 'add_station_to_route'
-        add_station_to_route
-      elsif task == 'del_station_from_route'
-        del_station_from_route
+        when 'add_route'
+          add_route
+        when 'list_routes'
+          list_routes
+        when 'add_station_to_route'
+          add_station_to_route
+        when 'del_station_from_route'
+          del_station_from_route
       ################## carriages ###############################
-      elsif task == 'add_carriage_to_train'
-        add_carriage_to_train
-      elsif task == 'del_carriage_from_train'
-        del_carriage_from_train
-      elsif task == 'list_carriages'
-        list_carriages
-      elsif task == 'exit'
-        break
+        when 'add_carriage_to_train'
+          'add_carriage_to_train'
+        when 'del_carriage_from_train'
+          del_carriage_from_train
+        when 'list_carriages'
+          list_carriages
+        when 'exit'
+          break
       end
       next
     end
@@ -253,26 +256,26 @@ class RailStationCompany
   end
 
   def get_carriage_by_name(train, carriage_name)
-    train.carriages.select do |carriage|
-      return carriage if carriage.name.downcase == carriage_name.downcase
+    train.carriages.detect do |carriage|
+      carriage if carriage.name.downcase == carriage_name.downcase
     end
   end
 
   def get_train_by_name(name)
-    @trains.select do |train|
-      return train if train.name.downcase == name.downcase
+    @trains.detect do |train|
+      train if train.name.downcase == name.downcase
     end
   end
 
   def get_station_by_name(name)
-    @stations.select do |station|
-      return station if station.name.downcase == name.downcase
+    @stations.detect do |station|
+      station if station.name.downcase == name.downcase
     end
   end
 
   def get_route_by_name(name)
-    @routes.select do |route|
-      return route if route.name.downcase == name.downcase
+    @routes.detect do |route|
+      route if route.name.downcase == name.downcase
     end
   end
 end
