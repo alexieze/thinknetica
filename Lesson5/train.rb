@@ -4,17 +4,17 @@ class Train
 
   attr_reader :number, :name, :speed, :carriages
 
-  @@number = {}
+  @@trains = {}
 
   def initialize(number, name, speed = 0)
     @name = name
     @carriages = []
     @speed = speed
-    @@number.store(number, self)
+    @@trains[number] = self
   end
 
   def self.find(number)
-    @@number[number]
+    @@trains[number]
   end
 
   def speed=(speed)
