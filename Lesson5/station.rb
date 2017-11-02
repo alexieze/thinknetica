@@ -10,7 +10,7 @@ class Station
     @name = name
     @trains = []
     @@stations << self
-    p register_instance
+    register_instance
   end
 
   def self.all

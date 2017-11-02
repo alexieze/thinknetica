@@ -14,7 +14,7 @@ class Train
   end
 
   def self.find(number)
-    @@number[number] if @@number[number] || nil
+    @@number[number]
   end
 
   def speed=(speed)
