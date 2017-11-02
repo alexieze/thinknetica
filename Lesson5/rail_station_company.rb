@@ -51,44 +51,25 @@ class RailStationCompany
 
       ################## stations #####################
       case task
-        when 'add_station'
-          add_station
-        when 'list_stations'
-          list_stations
-        when 'list_trains_on_station'
-          list_trains_on_station
+        when 'add_station' then add_station
+        when 'list_stations' then list_stations
+        when 'list_trains_on_station' then list_trains_on_station
       ################## trains ########################
-        when 'add_train'
-          add_train
-        when 'add_route_to_train'
-          add_route_to_train
-        when 'go_next_station'
-          go_next_station
-        when 'go_prev_station'
-          go_prev_station
-        when 'list_trains'
-          list_trains
+        when 'add_train' then add_train
+        when 'add_route_to_train' then add_route_to_train
+        when 'go_next_station' then go_next_station
+        when 'go_prev_station' then go_prev_station
+        when 'list_trains' then list_trains
       ##################### routes ##########################
-        when 'add_route'
-          add_route
-        when 'list_routes'
-          list_routes
-        when 'add_station_to_route'
-          add_station_to_route
-        when 'del_station_from_route'
-          del_station_from_route
+        when 'add_route' then add_route
+        when 'list_routes' then list_routes
+        when 'add_station_to_route' then add_station_to_route
+        when 'del_station_from_route' then del_station_from_route
       ################## carriages ###############################
-        when 'add_carriage_to_train'
-          'add_carriage_to_train'
-        when 'del_carriage_from_train'
-          del_carriage_from_train
-        when 'list_carriages'
-          list_carriages
-        when 'number'
-          number = gets.chomp.to_i
-          p Train.find(number)
-        when 'exit'
-          break
+        when 'add_carriage_to_train' then add_carriage_to_train
+        when 'del_carriage_from_train' then del_carriage_from_train
+        when 'list_carriages' then list_carriages
+        when 'exit' then break
       end
       next
     end

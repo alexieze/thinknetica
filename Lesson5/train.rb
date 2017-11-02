@@ -1,14 +1,16 @@
 class Train
   include InstanceCounter
+  include Company
+
   attr_reader :number, :name, :speed, :carriages
 
-  @@number = []
+  @@number = {}
 
   def initialize(number, name, speed = 0)
     @name = name
     @carriages = []
     @speed = speed
-    @@number.insert(number, self)
+    @@number.store(number, self)
   end
 
   def self.find(number)
