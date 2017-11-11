@@ -6,6 +6,8 @@ class Station
 
   @@instances = 0
 
+  NAME_FORMAT = /^[\w]{3,}$/i
+
   def initialize(name)
     @name = name
     validate!
