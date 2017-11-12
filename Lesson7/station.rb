@@ -30,9 +30,9 @@ class Station
     "Поезд #{train.name} отправился в путь со станции #{self.name}"
   end
 
-  def self.show_trains(stations)
-    stations.each do |station|
-      yield(station)
+  def show_trains
+    @trains.each do |train|
+      yield(train)
     end
   end
 

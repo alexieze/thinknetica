@@ -8,7 +8,7 @@ class PassengerCarriage < Carriage
   end
 
   def add_seat
-    if(@free_seats != 0)
+    if(@free_seats > 0)
       @free_seats -= 1
       @busy_seats += 1
       'Место успешно добавлено'

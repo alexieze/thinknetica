@@ -82,11 +82,10 @@ class RailStationCompany
   end
 
   def show_trains_on_stations
-    stations = Station.all
-    Station.show_trains(stations) do |station|
-      station.trains.each do |train|
-        puts "Номер поезда: #{train.number}; Тип поезда: #{train.type}; Количество вагонов: #{train.carriages.length} ;"
-      end
+    puts 'Введите название станции'
+    station = get_station_by_name(gets.chomp.to_s)
+    station.show_trains do |train|
+      puts "Номер поезда: #{train.number}; Тип поезда: #{train.type}; Количество вагонов: #{train.carriages.length} ;"
     end
   end
 

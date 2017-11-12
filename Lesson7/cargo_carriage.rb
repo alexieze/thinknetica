@@ -9,7 +9,7 @@ class CargoCarriage < Carriage
   end
 
   def fill_volume(volume)
-    if(@total_volume > volume && @total_volume > (@busy_volume + volume))
+    if(@total_volume > (@busy_volume + volume))
       @busy_volume += volume
       "В цестерну добавлено #{volume} едениц вещества"
     else
