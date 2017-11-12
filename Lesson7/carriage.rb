@@ -1,10 +1,18 @@
 class Carriage
   include Company
-  attr_reader :name
+  attr_reader :name, :number
+
+  @@number = 0
+
   NAME_FORMAT = /^[\w]{3,}/i
   def initialize(name)
     @name = name
     validate!
+    @number = @@number += 1
+  end
+
+  def type
+    self.class.name
   end
 
   private

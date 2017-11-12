@@ -37,6 +37,10 @@ class Train
     end
   end
 
+  def type
+    self.class.name
+  end
+
   def route(route)
     @route = route
     @current_station_index = 0

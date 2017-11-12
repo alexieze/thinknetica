@@ -73,7 +73,7 @@ class RailStationCompany
         when 'add_carriage_to_train' then add_carriage_to_train
         when 'del_carriage_from_train' then del_carriage_from_train
         when 'list_carriages' then list_carriages
-        when 'add_seats' then add_seats
+        when 'add_seat' then add_seat
         when 'fill_volume' then fill_volume
         when 'exit' then break
       end
@@ -85,7 +85,7 @@ class RailStationCompany
     stations = Station.all
     Station.show_trains(stations) do |station|
       station.trains.each do |train|
-        puts "Название поезда: #{train.name}; Номер поезда: #{train.number}; Количество вагонов: #{train.carriages.length} ;"
+        puts "Номер поезда: #{train.number}; Тип поезда: #{train.type}; Количество вагонов: #{train.carriages.length} ;"
       end
     end
   end
@@ -96,9 +96,9 @@ class RailStationCompany
     train = Train.find(train_number)
     train.detail_info_carriages do |carriage|
       if carriage.kind_of?(PassengerCarriage)
-        puts "Свободно #{carriage.free_seats} мест, #{carriage.busy_seats} занято мест"
+        puts "Номер вагона #{carriage.number}, Тип вагона #{carriage.type},Свободно #{carriage.free_seats} мест, #{carriage.busy_seats} занято мест"
       elsif carriage.kind_of?(CargoCarriage)
-        puts "Свободно #{carriage.free_volume } едениц объема, занято #{ carriage.busy_volume } едениц объема"
+        puts "Номер вагона #{carriage.number}, Тип вагона #{carriage.type}, Свободно #{carriage.free_volume } едениц объема, занято #{ carriage.busy_volume } едениц объема"
       end
     end
   end
@@ -143,7 +143,7 @@ class RailStationCompany
         puts 'Укажите объем цестерны'
         total_volume = gets.chomp.to_i
         cargo_carriage = CargoCarriage.new(carriage_name, total_volume)
-        train.add_carriage(cargo_carriage)
+        puts train.add_carriage(cargo_carriage)
       elsif train.stopped? && train.kind_of?(PassengerTrain)
         puts 'Укажите количество мест'
         all_seats = gets.chomp.to_i
