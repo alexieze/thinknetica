@@ -8,8 +8,7 @@ class RailStationCompany
     @routes   = []
   end
 
-
-  def run()
+  def run
     show_commands
     run_process
   end
@@ -44,32 +43,24 @@ class RailStationCompany
   end
 
   def run_process
-
-
-
     loop do
-
       puts 'Введите команду:'
       task = gets.chomp.to_s.downcase
-      ################## stations #####################
       case task
         when 'add_station' then add_station
         when 'list_stations' then list_stations
         when 'list_trains_on_station' then list_trains_on_station
         when 'show_trains_on_station' then show_trains_on_station
-      ################## trains ########################
         when 'add_train' then add_train
         when 'add_route_to_train' then add_route_to_train
         when 'go_next_station' then go_next_station
         when 'go_prev_station' then go_prev_station
         when 'list_trains' then list_trains
         when 'show_carriages_of_train' then show_carriages_of_train
-      ##################### routes ##########################
         when 'add_route' then add_route
         when 'list_routes' then list_routes
         when 'add_station_to_route' then add_station_to_route
         when 'del_station_from_route' then del_station_from_route
-      ################## carriages ###############################
         when 'add_carriage_to_train' then add_carriage_to_train
         when 'del_carriage_from_train' then del_carriage_from_train
         when 'list_carriages' then list_carriages
@@ -94,9 +85,9 @@ class RailStationCompany
     train_number = gets.chomp
     train = Train.find(train_number)
     train.detail_info_carriages do |carriage|
-      if carriage.kind_of?(PassengerCarriage)
+      if carriage.instance_of?(PassengerCarriage)
         puts "Номер вагона #{carriage.number}, Тип вагона #{carriage.type},Свободно #{carriage.free_seats} мест, #{carriage.busy_seats} занято мест"
-      elsif carriage.kind_of?(CargoCarriage)
+      elsif carriage.instance_of?(CargoCarriage)
         puts "Номер вагона #{carriage.number}, Тип вагона #{carriage.type}, Свободно #{carriage.free_volume } едениц объема, занято #{ carriage.busy_volume } едениц объема"
       end
     end
@@ -118,8 +109,8 @@ class RailStationCompany
     puts 'Введите имя поезда'
     train_name = gets.chomp.to_s
     train = get_train_by_name(train_name)
-    train.speed = 10;
-    puts train.go_next()
+    train.speed = 10
+    puts train.go_next
   end
 
   def go_prev_station
@@ -127,7 +118,7 @@ class RailStationCompany
     train_name = gets.chomp.to_s
     train = get_train_by_name(train_name)
     train.speed = 10
-    puts train.go_prev()
+    puts train.go_prev
   end
 
   def add_carriage_to_train
@@ -155,7 +146,7 @@ class RailStationCompany
     end
   end
 
-  def add_seats
+  def add_seat
     carriage = get_carriage
     puts carriage.add_seat
   end
@@ -312,25 +303,25 @@ class RailStationCompany
 
   def get_carriage_by_name(train, carriage_name)
     train.carriages.detect do |carriage|
-      carriage if carriage.name.downcase == carriage_name.downcase
+      carriage if carriage.name == carriage_name
     end
   end
 
   def get_train_by_name(name)
     @trains.detect do |train|
-      train if train.name.downcase == name.downcase
+      train if train.name == name
     end
   end
 
   def get_station_by_name(name)
     Station.all.detect do |station|
-      station if station.name.downcase == name.downcase
+      station if station.name == name
     end
   end
 
   def get_route_by_name(name)
     @routes.detect do |route|
-      route if route.name.downcase == name.downcase
+      route if route.name == name
     end
   end
 end
