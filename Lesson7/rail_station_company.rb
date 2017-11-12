@@ -56,7 +56,7 @@ class RailStationCompany
         when 'add_station' then add_station
         when 'list_stations' then list_stations
         when 'list_trains_on_station' then list_trains_on_station
-        when 'show_trains_on_stations' then show_trains_on_stations
+        when 'show_trains_on_station' then show_trains_on_station
       ################## trains ########################
         when 'add_train' then add_train
         when 'add_route_to_train' then add_route_to_train
@@ -81,7 +81,7 @@ class RailStationCompany
     end
   end
 
-  def show_trains_on_stations
+  def show_trains_on_station
     puts 'Введите название станции'
     station = get_station_by_name(gets.chomp.to_s)
     station.show_trains do |train|
