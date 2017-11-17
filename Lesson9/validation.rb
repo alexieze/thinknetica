@@ -6,22 +6,42 @@ module Validation
 
   module ClassMethods
 
-    def validate(name, type, condition = nil)
-      @params ||= []
-      @params << { name: name, type: type, condition: condition }
+    attr_reader :validations
+
+    def validate(name, type, params = nil)
+      @validations ||= []
+      @validations << { name: name, type: type, params: params }
+
     end
   end
 
   module InstanceMethods
 
     def validate!
-      p instance_variable_get(:params)
+      self.class.validations.each do |value|
+        value_var = instance_variable_get("@#{value[:name].to_s}")
+        send value[:type], value_var, value[:params]
+      end
     end
 
     def valid?
       validate!
     rescue
       false
+    end
+
+    private
+
+    def type(value, class_name)
+      raise 'Тип переменной не верный' unless value.instance_of?(class_name)
+    end
+
+    def format(value, param)
+      raise 'Неверный формат числа' if value != param
+    end
+
+    def presence(value)
+      raise 'Значение не должно быть пустым' unless value
     end
   end
 end

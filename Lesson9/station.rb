@@ -9,9 +9,6 @@ class Station
 
   NAME_FORMAT = /^[\w]{3,}$/i
 
-  validate :name, :format, NAME_FORMAT
-  validate :name, :presence
-
   def initialize(name)
     @name = name
     validate!
